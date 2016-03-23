@@ -10,13 +10,19 @@ class debug_cli
 {
     public function init()
     {
-        echo "I'm init\n";
+        if (!isset($this['level'])) {
+            $this['level'] = p\plug('debug')->getLevel('debug');
+        }
     }
 
     public function escape($s) { return $s; }
 
-    public function dump($p, $type='info')
+    public function dump($p, $type='debug')
     {
-        $this->store[] = [$p, $type];
+        $cli = p\plug('cli');
+        $debug = p\plug('debug');
+        if ($debug->getLevel($type) >= $this['level']) {
+            $cli->dump($p);
+        }
     }
 }

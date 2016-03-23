@@ -13,4 +13,14 @@ class Debug_cliTest extends PHPUnit_Framework_TestCase
         $this->assertContains($this->_plug,$output);
     }
 
+    function testError()
+    {
+        $plug = PMVC\plug($this->_plug);
+        \PMVC\plug('debug', ['output'=>$plug]);
+        ob_start();
+        \PMVC\d('aaa');
+        $output = ob_get_contents();
+        ob_end_clean();
+        $this->assertContains('string(3) "aaa"',$output);
+    }
 }
