@@ -1,0 +1,19 @@
+{
+    "name": "pmvc-plugin/debug_cli",
+    "description": "PMVC debug output for command line ",
+    "type": "library",
+    "keywords": ["cli", "debug", "pmvc", "plug-in"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hill",
+            "email": "hill@kimo.com"
+        }
+    ],
+    "require": {
+        "pmvc/pmvc": "*",
+        "pmvc-plugin/debug": "*",
+        "pmvc-plugin/cli": "*"
+    },
+    "minimum-stability": "dev"
+}
