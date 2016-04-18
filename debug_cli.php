@@ -15,7 +15,10 @@ class debug_cli
         }
     }
 
-    public function escape($s) { return $s; }
+    public function escape($s)
+    {
+        return strtr($s, ["\n"=>'', "\r"=>'']);
+    }
 
     public function getColor($level)
     {
