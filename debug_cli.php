@@ -39,8 +39,10 @@ class debug_cli
     public function dump($p, $type='debug')
     {
         $cli = p\plug('cli');
-        $debug = p\plug('debug');
-        if ($debug->getLevel($type) >= $debug->getLevel($this['level'])) {
+        if (p\plug('debug')->isShow(
+            $type,
+            $this['level']
+        )) {
             if (!is_array($p)) {
                 $cli->dump($p, $this->getColor($type));
             } else {
