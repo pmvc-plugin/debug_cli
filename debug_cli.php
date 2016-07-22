@@ -26,13 +26,13 @@ class debug_cli
             'trace'=>'%y',
             'debug'=>'%g',
             'info'=>'%b',
-            'warn'=>'%w',
+            'warn'=>'%m',
             'error'=>'%r'
         ];
         if (isset($levels[$level])) {
             return $levels[$level];
         } else {
-            return null;
+            return '%c';
         }
     }
 
