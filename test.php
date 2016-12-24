@@ -21,6 +21,6 @@ class Debug_cliTest extends PHPUnit_Framework_TestCase
         \PMVC\d('aaa');
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('string(3) "aaa"',$output);
+        $this->assertContains('aaa',$output);
     }
 }

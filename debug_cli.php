@@ -8,10 +8,12 @@ class debug_cli
     extends p\PlugIn
     implements DebugDumpInterface
 {
+    const DEFAULT_LEVEL = 'debug';
+
     public function init()
     {
         if (!isset($this['level'])) {
-            $this['level'] = 'debug';
+            $this['level'] = self::DEFAULT_LEVEL;
         }
     }
 
@@ -39,9 +41,11 @@ class debug_cli
     public function dump($p, $type='debug')
     {
         $cli = p\plug('cli');
-        if (p\plug('debug')->isShow(
+        $pDebug = p\plug('debug');
+        if ($pDebug->isShow(
             $type,
-            $this['level']
+            $this['level'],
+            $pDebug->getLevel(self::DEFAULT_LEVEL)
         )) {
             if (!is_array($p)) {
                 $cli->dump($p, $this->getColor($type));
