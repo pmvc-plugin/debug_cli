@@ -45,7 +45,7 @@ class debug_cli
         if ($pDebug->isShow(
             $type,
             $this['level'],
-            $pDebug->getLevel(self::DEFAULT_LEVEL)
+            $pDebug->levelToInt(self::DEFAULT_LEVEL)
         )) {
             if (!is_array($p)) {
                 $cli->dump($p, $this->getColor($type));
