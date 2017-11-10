@@ -47,11 +47,7 @@ class debug_cli
             $this['level'],
             $pDebug->levelToInt(self::DEFAULT_LEVEL)
         )) {
-            if (!is_array($p)) {
-                $cli->dump($p, $this->getColor($type));
-            } else {
-                $cli->tree($p, $this->getColor($type));
-            }
+            $cli->tree([$type=>$p], $this->getColor($type));
         }
     }
 }
