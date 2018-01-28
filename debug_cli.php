@@ -25,10 +25,10 @@ class debug_cli
     public function getColor($level)
     {
         $levels =  [
-            'trace'=>'%y',
+            'trace'=>'%c',
             'debug'=>'%g',
             'info'=>'%b',
-            'warn'=>'%m',
+            'warn'=>'%y',
             'error'=>'%r'
         ];
         if (isset($levels[$level])) {
