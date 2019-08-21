@@ -47,7 +47,7 @@ class debug_cli
             $this['level'],
             $pDebug->levelToInt(self::DEFAULT_LEVEL)
         )) {
-            $cli->tree([$type=>$p], $this->getColor($type));
+            $cli->tree([$type=>$p], $this->getColor($type), 'error' === $type);
         }
     }
 }
