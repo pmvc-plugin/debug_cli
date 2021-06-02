@@ -1,26 +1,28 @@
 <?php
-PMVC\Load::plug();
-PMVC\addPlugInFolders(['../']);
-class Debug_cliTest extends PHPUnit_Framework_TestCase
+namespace PMVC\PlugIn\debug;
+
+use PMVC\TestCase;
+
+class Debug_cliTest extends TestCase
 {
     private $_plug = 'debug_cli';
     function testPlugin()
     {
         ob_start();
-        print_r(PMVC\plug($this->_plug));
+        print_r(\PMVC\plug($this->_plug));
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains($this->_plug,$output);
+        $this->haveString($this->_plug,$output);
     }
 
     function testDump()
     {
-        $plug = PMVC\plug($this->_plug);
+        $plug = \PMVC\plug($this->_plug);
         \PMVC\plug('debug', ['output'=>$plug]);
         ob_start();
         \PMVC\d('aaa');
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('aaa',$output);
+        $this->haveString('aaa',$output);
     }
 }

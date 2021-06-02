@@ -15,5 +15,8 @@
         "pmvc-plugin/debug": "*",
         "pmvc-plugin/cli": "*"
     },
+    "require-dev": {
+        "pmvc-plugin/unit": "*"
+    },
     "minimum-stability": "dev"
 }
