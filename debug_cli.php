@@ -1,14 +1,13 @@
 <?php
 namespace PMVC\PlugIn\debug;
 use PMVC as p;
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\debug_cli';
-p\initPlugin(['debug'=>null], true);
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__ . '\debug_cli';
+p\initPlugin(['debug' => null], true);
 
-class debug_cli
-    extends p\PlugIn
-    implements DebugDumpInterface
+class debug_cli extends p\PlugIn implements DebugDumpInterface
 {
     const DEFAULT_LEVEL = 'debug';
+    private $_hasLastError;
 
     public function init()
     {
@@ -17,19 +16,14 @@ class debug_cli
         }
     }
 
-    public function escape($s)
-    {
-        return strtr($s, ["\n"=>'', "\r"=>'']);
-    }
-
     public function getColor($level)
     {
-        $levels =  [
-            'trace'=>'%c',
-            'debug'=>'%g',
-            'info'=>'%b',
-            'warn'=>'%y',
-            'error'=>'%r'
+        $levels = [
+            'trace' => '%c',
+            'debug' => '%g',
+            'info' => '%b',
+            'warn' => '%y',
+            'error' => '%r',
         ];
         if (isset($levels[$level])) {
             return $levels[$level];
@@ -38,16 +32,36 @@ class debug_cli
         }
     }
 
-    public function dump($p, $type='debug')
+    public function escape($s, $type = null)
+    {
+        if ('trace' === $type) {
+            return strtr($s, ["\n" => '', "\r" => '']);
+        } else {
+            return $s;
+        }
+    }
+
+    public function dump($p, $type = 'debug')
     {
         $cli = p\plug('cli');
         $pDebug = p\plug('debug');
-        if ($pDebug->isShow(
-            $type,
-            $this['level'],
-            $pDebug->levelToInt(self::DEFAULT_LEVEL)
-        )) {
-            $cli->tree([$type=>$p], $this->getColor($type), 'error' === $type);
+        if ($this->_hasLastError && 'trace' === $type) {
+            $cli->tree([$type => $p], $this->getColor($type), true);
+            $this->_hasLastError = null;
+        } else {
+            if (
+                $pDebug->isShow(
+                    $type,
+                    $this['level'],
+                    $pDebug->levelToInt(self::DEFAULT_LEVEL)
+                )
+            ) {
+                $isError = 'error' === $type;
+                if ($isError) {
+                    $this->_hasLastError = true;
+                }
+                $cli->tree([$type => $p], $this->getColor($type), $isError);
+            }
         }
     }
 }
